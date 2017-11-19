@@ -1,0 +1,8 @@
+{
+  "extends": "airbnb-base",
+  "rules":{
+    "semi":0,
+    "no-restricted-globals":0, //"禁用特定的的全局变量" 取消报错
+    "no-console":0  //"禁用console.log" 取消报错
+  }
+}
