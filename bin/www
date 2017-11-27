@@ -9,7 +9,6 @@ const app = require('../app')
 const debug = require('debug')('node-advanced:server')
 const http = require('http')
 
-
 // take function to top
 /**
  * Normalize a port into a number, string, or false.
@@ -90,6 +89,9 @@ app.set('port', port)
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port)
+server.listen(port, (...res) => {
+  console.log(res)
+  console.log(`http://localhost:${port}`)
+})
 server.on('error', onError)
 server.on('listening', onListening)
