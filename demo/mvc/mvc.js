@@ -8,13 +8,22 @@ const controler = require('./controler')
 
 router.get('/', (req, res) => {
   const { username, age } = req.query
-  Login.insert(username, age)
-  res.render(path.resolve(__dirname, 'view.ejs'), controler)
+  res.render(path.resolve(__dirname, 'view.ejs'))
 })
 
-router.post('/all', (req, res) => {
+router.get('/all', (req, res) => {
+  res.json(controler.allUser())
+})
+
+router.post('/signup', (req, res) => {
+  const { username, pwd } = req.body
   console.log(req.body)
-  res.json(req.body)
+  res.json(controler.signUp(username, pwd))
+})
+
+router.post('/signin', (req, res) => {
+  const { username, pwd } = req.body
+  res.json(controler.signIn(username, pwd))
 })
 
 module.exports = router

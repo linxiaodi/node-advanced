@@ -30,9 +30,6 @@ app.use('/users', users)
 
 app.use('/login', mvc)
 
-app.post('/god', (req, res) => {
-  res.json(req.body)
-})
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
