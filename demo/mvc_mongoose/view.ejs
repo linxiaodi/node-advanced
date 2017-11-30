@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>login</title>
+  <script src="https://cdn.bootcss.com/axios/0.17.1/axios.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    .form-control {
+      margin-bottom: 15px;
+    }
+
+    .box {
+      padding: 50px;
+    }
+
+    .gap {
+      margin-bottom: 20px;
+    }
+
+    .alert-info {
+      display: none;
+      font-size: 12px;
+      margin-left: 20px;
+    }
+    .register,.login{
+      margin-bottom: 40px;
+      border-bottom: 1px solid #ddd
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="register">
+      <h5>注册</h5>
+      <input class="form-control primary form-control-sm" placeholder="用户名" type="text">
+      <input class="form-control primary form-control-sm" placeholder="密码" type="text">
+      <div class="gap">
+        <button class="btn btn-primary btn-sm sign-up">注册</button>
+        <span class="sign-up_info alert alert-info"></span>
+      </div>
+    </div>
+    <div class="login">
+      <h5>登录</h5>
+      <input class="form-control primary form-control-sm" placeholder="用户名" type="text">
+      <input class="form-control primary form-control-sm" placeholder="密码" type="text">
+      <div class="gap">
+        <button class="btn btn-primary btn-sm sign-in">登录</button>
+        <span class="sign-in_info alert alert-info"></span>
+      </div>
+    </div>
+    <div class="gap">
+      <button class="btn btn-primary btn-sm show-all">展示所有数据</button>
+      <pre style="margin-top:20px; padding:1em; display: none;" class="jumbotron">
+      </pre>
+    </div>
+  </div>
+  <script>
+    $('.sign-up').on('click', function () {
+      const username = $('.register .form-control')[0].value
+      const pwd = $('.register .form-control')[1].value
+      $('.sign-up_info').show()
+      $.post({
+        url: '/user/register',
+        data: {
+          username,
+          pwd
+        },
+        success(res) {
+          $('.sign-up_info').text(res.message)
+        }
+      })
+    })
+
+    $('.sign-in').on('click', function () {
+      $('.sign-in_info').show()
+      const username = $('.login .form-control')[0].value
+      const pwd = $('.login .form-control')[1].value
+      $.post({
+        url: '/user/login',
+        data: {
+          username,
+          pwd
+        },
+        success(res) {
+          $('.sign-in_info').text(res.message)
+        }
+      })
+    })
+
+    $('.show-all').on('click', function () {
+      $('.jumbotron').show()
+      $.get({
+        url: '/user/all',
+        success(res) {
+          console.log(res)
+          $('.jumbotron').text(JSON.stringify(res,null,2))
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>

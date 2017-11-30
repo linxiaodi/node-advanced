@@ -8,7 +8,8 @@ const bodyParser = require('body-parser')
 const index = require('./routes/index')
 const users = require('./routes/users')
 
-const mvc = require('./demo/mvc/mvc')
+// const mvc = require('./demo/mvc/mvc')
+const user = require('./demo/mvc_mongoose/index')
 
 const app = express()
 
@@ -28,7 +29,19 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', index)
 app.use('/users', users)
 
-app.use('/login', mvc)
+// link to mongoose
+const mongoose = require('mongoose')
+
+const mongoUrl = 'mongodb://localhost:27018/test'
+const db = mongoose.connect(mongoUrl, { useMongoClient: true })
+db.on('open', () => {
+  console.log('db connected ~~~')
+})
+db.on('error', (e) => {
+  console.log(e)
+})
+
+app.use('/user', user)
 
 
 // catch 404 and forward to error handler
